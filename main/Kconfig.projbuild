@@ -13,3 +13,21 @@ menu "Configuração do Wifi Configuration"
             Senha do WiFi (WPA or WPA2).
 
 endmenu
+
+menu "Configuração da chave do ipstack"
+    config ESP_IPSTACK_KEY
+        string "Chave ipstack"
+        default "key"
+        help
+            Chave fornecida pelo site.
+
+endmenu
+
+menu "Configuração da chave do openweather"
+    config ESP_OPENWEATHER_KEY
+        string "Chave openweather"
+        default "key"
+        help
+            Chave fornecida pelo site.
+
+endmenu
