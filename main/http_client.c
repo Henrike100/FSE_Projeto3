@@ -31,6 +31,8 @@ void parse_ipstackJSON() {
     if(cJSON_IsNumber(lon)) {
         longitude = lon->valuedouble;
     }
+
+    cJSON_Delete(ipstack_json);
 }
 
 void parse_openweatherJSON() {
@@ -64,6 +66,8 @@ void parse_openweatherJSON() {
     if(cJSON_IsNumber(humidity)) {
         printf("Umidade: %.2lf%%\n", humidity->valuedouble);
     }
+
+    cJSON_Delete(openweather_json);
 }
 
 esp_err_t _http_event_handle_ipstack(esp_http_client_event_t *evt) {
@@ -132,11 +136,10 @@ esp_err_t _http_event_handle_openweather(esp_http_client_event_t *evt) {
 
 void https_request_ipstack() {
     const char url[] = "http://api.ipstack.com/check?access_key=";
-    const char key[] = IPSTACK_KEY;
 
-    char *result = malloc(strlen(url) + strlen(key) + 1);
+    char *result = malloc(strlen(url) + strlen(IPSTACK_KEY) + 1);
     strcpy(result, url);
-    strcat(result, key);
+    strcat(result, IPSTACK_KEY);
 
     esp_http_client_config_t config = {
         .url = result,

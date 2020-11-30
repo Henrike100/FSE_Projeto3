@@ -24,14 +24,16 @@ void taskLED(void * params) {
 
     while(true) {
         if(conectado) {
-            if(xSemaphoreTake(ledSemaphore, portMAX_DELAY)) {
-                gpio_set_level(LED, 1);
-                xSemaphoreGive(ledSemaphore);
+            if(!estado) {
+                if(xSemaphoreTake(ledSemaphore, portMAX_DELAY)) {
+                    gpio_set_level(LED, 1);
+                    xSemaphoreGive(ledSemaphore);
+                }
             }
         }
         else {
-            gpio_set_level(LED, estado);
             estado = !estado;
+            gpio_set_level(LED, estado);
         }
         vTaskDelay(1000 / portTICK_PERIOD_MS);
     }
@@ -50,8 +52,7 @@ void RealizaHTTPRequest(void * params) {
             }
             xSemaphoreGive(conexaoWifiSemaphore);
         }
-        // trocar para 300000
-        vTaskDelay(5000 / portTICK_PERIOD_MS);
+        vTaskDelay(300000 / portTICK_PERIOD_MS);
     }
 }
 
